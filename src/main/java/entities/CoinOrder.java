@@ -18,7 +18,8 @@ public class CoinOrder {
     private int amount;
     private long buyPrice;
 
-    @ManyToOne
+    @ManyToOne()
+    @JoinColumn(name = "USER_user_name")
     private User user;
 
     public CoinOrder() {

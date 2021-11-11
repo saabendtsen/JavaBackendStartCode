@@ -31,8 +31,8 @@ public class User implements Serializable {
   @ManyToMany
   private List<Role> roleList = new ArrayList<>();
 
-  @OneToMany(mappedBy = "user")
-  private List<CoinOrder> orders = new ArrayList<>();
+  @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+  private List<CoinOrder> orders;
 
   public List<String> getRolesAsStrings() {
     if (roleList.isEmpty()) {
@@ -59,8 +59,8 @@ public class User implements Serializable {
 
   public User(String username, String password) {
     this.username = username;
-
     this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+    this.orders = new ArrayList<>();
   }
 
 
