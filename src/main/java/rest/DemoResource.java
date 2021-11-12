@@ -21,6 +21,7 @@ import facades.UserFacade;
 import org.eclipse.persistence.annotations.CompositeMember;
 import utils.EMF_Creator;
 import utils.HttpUtils;
+import utils.SetupTestUsers;
 
 @Path("info")
 public class DemoResource {
@@ -38,6 +39,7 @@ public class DemoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getInfoForAll() {
+        facade.setupUsers();
         return "{\"msg\":\"Hello anonymous\"}";
     }
 
