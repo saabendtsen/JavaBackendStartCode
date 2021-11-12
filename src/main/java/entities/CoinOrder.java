@@ -26,6 +26,7 @@ public class CoinOrder {
     }
 
 
+
     public CoinOrder(CoinOrderDTO coinOrderDTO) {
         this.coinName = coinOrderDTO.getCoinName();
         this.amount = coinOrderDTO.getAmount();
