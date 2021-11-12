@@ -63,13 +63,16 @@ class CoinFacadeTest {
     @Test
     void getAllordersForUser() {
 
-        CoinOrderDTO dto = new CoinOrderDTO("ETH",4,30000,user.getUsername());
+        CoinOrderDTO dto = new CoinOrderDTO("bitcoin",4,30000,user.getUsername());
         facade.createOrder(dto);
-        CoinOrderDTO dto2 = new CoinOrderDTO("LCR",4,30000,user.getUsername());
+        CoinOrderDTO dto2 = new CoinOrderDTO("ethereum",4,30000,user.getUsername());
         facade.createOrder(dto2);
 
         List<CoinOrderDTO> coinOrderDTOList = facade.getAllordersForUser(user.getUsername());
         System.out.println(coinOrderDTOList.size());
         assertEquals(coinOrderDTOList.size(),2);
+       // assertTrue(coinOrderDTOList.get(0).getCurrentPrice()!=null);
     }
+
+
 }
