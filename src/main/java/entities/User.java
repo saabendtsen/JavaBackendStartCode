@@ -31,7 +31,7 @@ public class User implements Serializable {
   @ManyToMany
   private List<Role> roleList = new ArrayList<>();
 
-  @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
   private List<CoinOrder> orders;
 
   public List<String> getRolesAsStrings() {
