@@ -9,6 +9,7 @@ public class CoinOrderDTO {
     private int amount;
     private long buyPrice;
     private String user;
+    private String currentPrice;
 
 
     public CoinOrderDTO() {
@@ -34,6 +35,14 @@ public class CoinOrderDTO {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public String getCurrentPrice() {
+        return currentPrice;
+    }
+
+    public void setCurrentPrice(String currentPrice) {
+        this.currentPrice = currentPrice;
     }
 
     public String getCoinName() {

@@ -39,9 +39,18 @@ public class DemoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getInfoForAll() {
-        facade.setupUsers();
         return "{\"msg\":\"Hello anonymous\"}";
     }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("createUsers")
+    public String createUsers() {
+        facade.setupUsers();
+        return "test users created";
+
+    }
+
 
     //Just to verify if the database is setup
     @GET

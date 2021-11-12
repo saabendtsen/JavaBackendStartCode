@@ -1,5 +1,6 @@
 package facades;
 
+import Webscraper.GetCurrentPrice;
 import dtos.CoinOrderDTO;
 import entities.CoinOrder;
 import entities.User;
@@ -7,7 +8,9 @@ import entities.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.*;
 
 public class CoinFacade {
 
@@ -51,11 +54,54 @@ public class CoinFacade {
             TypedQuery<CoinOrder> query = em.createQuery("SELECT c from CoinOrder c WHERE c.user=:user",CoinOrder.class);
             query.setParameter("user",em.find(User.class,userName));
             List<CoinOrder> coinOrderList = query.getResultList();
-
             return CoinOrder.toDtos(coinOrderList);
         }finally {
             em.close();
         }
+    }
+
+
+    public List<CoinOrderDTO> getCurrentPrice (List<CoinOrderDTO> coinOrderDTOList) throws ExecutionException, InterruptedException {
+
+        class task implements Callable<GetCurrentPrice> {
+            GetCurrentPrice gcp;
+            public task(GetCurrentPrice gcp) {
+                this.gcp = gcp;
+            }
+
+            @Override
+            public GetCurrentPrice call() throws Exception {
+                gcp.doWork();
+                return gcp;
+            }
+        }
+
+        ExecutorService executor = Executors.newCachedThreadPool();
+
+        List<GetCurrentPrice> coins = new ArrayList<>();
+        List<Future> futures = new ArrayList<>();
+        List<GetCurrentPrice> result = new ArrayList<>();
+        List<CoinOrderDTO> coinOrderDTOList1 = new ArrayList<>();
+
+
+        for (CoinOrderDTO dto: coinOrderDTOList ) {
+            coins.add(new GetCurrentPrice(dto));
+        }
+
+        for(GetCurrentPrice gcp : coins) {
+            Callable<GetCurrentPrice> task = new task(gcp);
+            Future future = executor.submit(task);
+            futures.add(future);
+        }
+
+        for (Future<GetCurrentPrice> f : futures){
+            result.add(f.get());
+        }
+        for(GetCurrentPrice gpc : result){
+            coinOrderDTOList1.add(gpc.getDto());
+        }
+
+        return coinOrderDTOList1;
     }
 
 }
