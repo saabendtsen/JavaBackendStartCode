@@ -29,10 +29,17 @@ class CoinFacadeTest {
     public static void setUpClass(){
         emf = EMF_Creator.createEntityManagerFactoryForTest();
         facade = CoinFacade.getCoinFacade(emf);
-        user = new User("user", "user1");
+
+
+
+        user = new User("testUser", "user1");
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
+        em.createQuery("delete from CoinOrder").executeUpdate();
+        em.createQuery("delete from User").executeUpdate();
+        em.createQuery("delete from Role").executeUpdate();
+
         Role userRole = new Role("user");
         user.addRole(userRole);
         em.persist(userRole);
