@@ -4,7 +4,7 @@ import entities.CoinOrder;
 
 public class CoinOrderDTO {
 
-
+    private Long id;
     private String coinName;
     private int amount;
     private long buyPrice;
@@ -22,7 +22,19 @@ public class CoinOrderDTO {
         this.user = user;
     }
 
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public CoinOrderDTO(CoinOrder coinOrder) {
+        if(coinOrder.getId() != null){
+            this.id = coinOrder.getId();
+        }
         this.coinName = coinOrder.getCoinName();
         this.amount = coinOrder.getAmount();
         this.buyPrice = coinOrder.getBuyPrice();
