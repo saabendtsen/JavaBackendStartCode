@@ -48,6 +48,21 @@ public class CoinFacade {
     }
 
 
+    public CoinOrderDTO deleteOrder (Long id){
+        EntityManager em = getEntityManager();
+
+        try{
+            em.getTransaction().begin();
+            CoinOrder coinOrder = em.find(CoinOrder.class,id);
+            em.remove(coinOrder);
+            em.getTransaction().commit();
+            return new CoinOrderDTO(coinOrder);
+        } finally {
+            em.close();
+        }
+    }
+
+
     public List<CoinOrderDTO> getAllordersForUser (String userName){
         EntityManager em = getEntityManager();
         try {

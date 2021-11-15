@@ -12,10 +12,7 @@ import utils.HttpUtils;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.SecurityContext;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -54,6 +51,14 @@ public class CoinResource {
         return gson.toJson(dto);
     }
 
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("{id}")
+    @RolesAllowed("user")
+    public Response deletePerson(@PathParam("id") long id) {
+       CoinOrderDTO dto = facade.deleteOrder(id);
+        return Response.ok("{\"status\" : \"removed: " + gson.toJson(dto) + "\"}", "application/json").build();
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
