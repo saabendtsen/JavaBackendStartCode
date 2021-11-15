@@ -50,7 +50,6 @@ public class CoinFacade {
 
     public CoinOrderDTO deleteOrder (Long id){
         EntityManager em = getEntityManager();
-
         try{
             em.getTransaction().begin();
             CoinOrder coinOrder = em.find(CoinOrder.class,id);
